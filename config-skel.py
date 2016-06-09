@@ -1,0 +1,6 @@
+title = ""
+url = ""
+location = ""
+rss_location = ""
+desc = ""
+css_location = ""
