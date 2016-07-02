@@ -11,6 +11,8 @@ args = parser.parse_args()
 if not args.workflow:
 	print("'n' for new post, 'g' to generate, 'q' to quit.")
 	running = True;
+def tweetlink():
+	return config.tweetlink_do and config.tweetlink_location != "" and config.tweetlink_url != ""
 def loop(choice):
 	if choice.lower() == "n":
 		title = raw_input("Title: ")
@@ -22,7 +24,11 @@ def loop(choice):
 		blog_posts.reverse()
 		i = len(blog_posts)
 		for post in blog_posts:
-			contents += "<h2 id='post"+str(i)+"'>"+post[0]+"</h2><p>"+post[1]+"</p>"
+			contents += "<h2 id='post"+str(i)+"'>"+post[0]+"</h2><p>"+post[1]
+			if tweetlink():
+				contents += "<a href='{}'>Tweet this</a></p>".format(config.tweetlink_url+"#post"+str(i))
+			else:
+				contents += "</p>"
 			rss += "<item><title>{0}</title><link>{3}#post{1!s}</link><description>{2}</description></item>".format(post[0],i,post[1][3:-5].replace("<","&lt;").replace(">","&gt;"),config.url)
 			i -= 1
 		blog_posts.reverse()
@@ -32,6 +38,9 @@ def loop(choice):
 			f.write(contents);
 		with open(config.rss_location,"wb") as f2:
 			f2.write(rss)
+		if tweetlink():
+			with open(config.tweetlink_location,"wb") as f3:
+				f3.write("<script>document.location='https://twitter.com/home?status=I just read an article from {}: {}%23'+document.location.hash.split('').slice(1).join('')</script>".format(config.title,config.url)) 
 	elif choice.lower() == "q":
 		return False
 	else:
