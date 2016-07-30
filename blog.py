@@ -40,7 +40,7 @@ def loop(choice):
 			f2.write(rss)
 		if tweetlink():
 			with open(config.tweetlink_location,"wb") as f3:
-				f3.write("<script>document.location='https://twitter.com/home?status=I just read an article from {}: {}%23'+document.location.hash.split('').slice(1).join('')</script>".format(config.title,config.url)) 
+				f3.write("<script>document.location='https://twitter.com/home?status={}'+document.location.hash.split('').slice(1).join('')</script>".format(config.tweetlink_format).format(config.title,config.url)) 
 	elif choice.lower() == "q":
 		return False
 	else:
