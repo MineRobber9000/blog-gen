@@ -7,6 +7,7 @@ except:
 	blog_posts = []
 parser = argparse.ArgumentParser(description="A blog generator.")
 parser.add_argument("--workflow",help="Run the basic workflow (write a new post, generate the page, and quit)",action="store_true")
+parser.add_argument("--generate",help="Generate the page and quit")
 args = parser.parse_args()
 if not args.workflow:
 	print("'n' for new post, 'g' to generate, 'q' to quit.")
