@@ -7,9 +7,9 @@ except:
 	blog_posts = []
 parser = argparse.ArgumentParser(description="A blog generator.")
 parser.add_argument("--workflow",help="Run the basic workflow (write a new post, generate the page, and quit)",action="store_true")
-parser.add_argument("--generate",help="Generate the page and quit")
+parser.add_argument("--generate",help="Generate the page and quit",action="store_true")
 args = parser.parse_args()
-if not args.workflow:
+if not args.workflow and not args.generate:
 	print("'n' for new post, 'g' to generate, 'q' to quit.")
 	running = True;
 def tweetlink():
@@ -48,10 +48,13 @@ def loop(choice):
 		print("Unknown option: "+choice)
 	cPickle.dump(blog_posts,open("posts.pickled","wb"))
 	return True
-if not args.workflow:
+if not args.workflow and not args.generate:
 	while running:
 		running = loop(raw_input("> "))
 	print("bye")
+elif not args.workflow and args.generate:
+	loop("g")
+	loop("q")
 else:
 	loop("n")
 	loop("g")
