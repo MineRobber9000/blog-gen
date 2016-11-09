@@ -1,12 +1,10 @@
+import os
 title = ""
 url = ""
 location = ""
 rss_location = ""
-rss_url = ""
 desc = ""
 css_location = ""
 tweetlink_do = True
 tweetlink_location = ""
 tweetlink_url = ""
-tweetlink_format = "I just read an article from \"{}\":"
-tweetlink_format += " {}%23" # don't change this!
