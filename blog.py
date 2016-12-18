@@ -1,6 +1,6 @@
 import cPickle, subprocess, tempfile, markdown2, config, time, argparse;
-print("MineRobber's blog generator")
-print("------------------------")
+#print("MineRobber's blog generator")
+#print("------------------------")
 try:
 	blog_posts = cPickle.load(open("posts.pickled","rb"))
 except:
@@ -10,6 +10,8 @@ parser.add_argument("--workflow",help="Run the basic workflow (write a new post,
 parser.add_argument("--generate",help="Generate the page and quit",action="store_true")
 args = parser.parse_args()
 if not args.workflow and not args.generate:
+	print("MineRobber's blog generator")
+	print("------------------------")
 	print("'n' for new post, 'g' to generate, 'q' to quit.")
 	running = True;
 def tweetlink():
