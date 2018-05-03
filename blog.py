@@ -1,4 +1,4 @@
-import cPickle, subprocess, tempfile, markdown2, config, time, argparse;
+import cPickle, subprocess, tempfile, markdown2, config, time, argparse, tempfile, os;
 #print("MineRobber's blog generator")
 #print("------------------------")
 try:
@@ -15,11 +15,14 @@ if not args.workflow and not args.generate:
 	print("'n' for new post, 'g' to generate, 'q' to quit.")
 	running = True;
 def tweetlink():
-	return config.tweetlink_do and config.tweetlink_location != "" and config.tweetlink_url != ""
+	return config.tweetlink_do and config.tweetlink_location and config.tweetlink_url
 def loop(choice):
 	if choice.lower() == "n":
 		title = raw_input("Title: ")
-		body = markdown2.markdown(raw_input("Body: "))
+		bodyf = tempfile.NamedTemporaryFile()
+		os.system("nano {}".format(bodyf.name))
+		body = markdown2.markdown(bodyf.read().rstrip())
+		bodyf.close()
 		blog_posts.append([title, body])
 	elif choice.lower() == "g":
 		rss = "<?xml version='1.0' encoding='UTF-8'?><rss version='2.0'><channel><title>"+config.title+"</title><link>"+config.url+"</link><description>"+config.desc+"</description>"
